@@ -1,0 +1,67 @@
+﻿@model IEnumerable<WebApplication1.Models.Movie>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Movie List</h2>
+<p>
+    @Html.ActionLink("Create New", "Create", "Admin")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.movie_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.director)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.poster)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.release_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.category)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.movie_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.director)
+        </td>
+        <td>
+            <img src="@item.poster" class="img" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.release_date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.category)
+        </td>
+        <td>
+            <a class="btn btn-danger" href="@Url.Action("Detail", "Admin", new {id = item.movie_id})">Detail</a> |
+            <a class="btn btn-danger" href="@Url.Action("Delete", "Admin", new {id = item.movie_id})">Delete</a>
+        </td>
+    </tr>
+}
+</table>
+<style>
+    .img {
+        width: 200px;
+        height: 250px;
+    }
+</style>

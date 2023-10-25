@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Midterm2" Class="dbMoviesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="dbo.Buy" Member="Buys">
+    <Type Name="Buy">
+      <Column Name="buy_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="buy_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="cus_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Buy_buy_detail" Member="buy_details" ThisKey="buy_id" OtherKey="buy_id" Type="buy_detail" />
+      <Association Name="Customer_Buy" Member="Customer" ThisKey="cus_id" OtherKey="cus_id" Type="Customer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Movie" Member="Movies">
+    <Type Name="Movie">
+      <Column Name="movie_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="movie_name" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="director" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="poster" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="release_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="category" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Association Name="Movie_buy_detail" Member="buy_details" ThisKey="movie_id" OtherKey="movie_id" Type="buy_detail" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Customer" Member="Customers">
+    <Type Name="Customer">
+      <Column Name="cus_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cus_name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="Customer_Buy" Member="Buys" ThisKey="cus_id" OtherKey="cus_id" Type="Buy" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Admins" Member="Admins">
+    <Type Name="Admin">
+      <Column Name="ad_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ad_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.buy_detail" Member="buy_details">
+    <Type Name="buy_detail">
+      <Column Name="buy_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="movie_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(10,0)" CanBeNull="true" />
+      <Association Name="Buy_buy_detail" Member="Buy" ThisKey="buy_id" OtherKey="buy_id" Type="Buy" IsForeignKey="true" />
+      <Association Name="Movie_buy_detail" Member="Movie" ThisKey="movie_id" OtherKey="movie_id" Type="Movie" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

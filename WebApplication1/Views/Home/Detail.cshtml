@@ -1,0 +1,57 @@
+﻿@model WebApplication1.Models.Movie
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Html.DisplayFor(model => model.movie_name)</h1>
+<div class="form-group form-inline">
+    <div>
+        <img src="@Model.poster" class="img" />
+    </div>
+    <div style="margin-left: 50px">
+        <h3>
+            Director
+        </h3>
+        <h5>
+            @Html.DisplayFor(model => model.director)
+        </h5>
+        <h3>
+            Release Date
+        </h3>
+        <h5>
+            @Html.DisplayFor(model => model.release_date)
+        </h5>
+        <h3>
+            Category
+        </h3>
+        <h5>
+            @Html.DisplayFor(model => model.category)
+        </h5>
+        <h3>
+            Price
+        </h3>
+        <h5>
+            @Html.DisplayFor(model => model.price) USD
+        </h5>
+    </div>
+</div>
+<div>
+    @if (Session["Customer"] != null)
+    {
+        <a class="btn btn-danger" href="@Url.Action("AddCart", "Cart", new { @id = Model.movie_id })">Buy Ticket</a>
+    }
+    else
+    {
+        <a class="btn btn-danger" href="@Url.Action("Login", "User")">Login To Buy Ticket</a>
+    }
+
+</div>
+<style>
+    .img {
+        width: 300px;
+        height: 350px;
+    }
+</style>
+

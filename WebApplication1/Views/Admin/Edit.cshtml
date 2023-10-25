@@ -1,0 +1,121 @@
+﻿@model WebApplication1.Models.Movie
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Movie</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.movie_id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.movie_name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.movie_name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.movie_name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.director, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.director, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.director, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.poster, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.poster, new { htmlAttributes = new { @class = "form-control image" } })
+                @Html.ValidationMessageFor(model => model.poster, "", new { @class = "text-danger" })
+                <input type="file" name="fileUpload" id="fileUpload" accept="image/*" style="display:none;" />
+                <input type="button" id="btnUpload" value="Choose" class="btn btn-danger" />
+                <img src="@Model.poster" id="pictureUpload" class="img" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.release_date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.release_date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.release_date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.price, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.category, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.category, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.category, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-danger" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <a class="btn btn-danger" href="@Url.Action("Index", "Admin")">Back To List</a>
+</div>
+<style>
+    .img {
+        width: 200px;
+        height: 250px;
+    }
+</style>
+@section upload
+{
+    <script>
+        $(function () {
+            $('#btnUpload').click(function () {
+                $('#fileUpload').trigger('click');
+            });
+        });
+        $('#fileUpload').change(function () {
+            if (window.FormData !== undefined) {
+                var fileUpload = $('#fileUpload').get(0);
+                var files = fileUpload.files;
+                var formData = new FormData();
+                formData.append('file', files[0]);
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: '/Admin/ProcessUpload',
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (urlImage) {
+                            $('#pictureUpload').attr('src', urlImage);
+                            $('.image').val(urlImage);
+                        },
+                        error: function (err) {
+                            alert('Error ', err.statusText);
+                        }
+                    });
+            }
+        });
+    </script>
+}
+

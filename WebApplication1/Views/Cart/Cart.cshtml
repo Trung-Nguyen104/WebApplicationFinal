@@ -1,0 +1,85 @@
+﻿@model IEnumerable<WebApplication1.Models.Cart>
+
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cart</h2>
+<table class="table">
+    <tr>
+        <th>
+            Movie ID
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.movie_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.poster)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.release_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.iquantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.total)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.movie_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.movie_name)
+            </td>
+            <td>
+                <img src="@item.poster" class="img" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.release_date)
+            </td>
+            @using (Html.BeginForm("CartUpdate", "Cart", new { @id = item.movie_id }))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.price)
+                </td>
+                <td>
+                    <input type="number" min="1" name="txtSoLg" value="@item.iquantity" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.total)
+                </td>
+                <td>
+                    <a class="btn btn-danger" href="@Url.Action("CartDelete", "Cart", new { id = item.movie_id })">Delete</a>
+                </td>
+                <td>
+                    <input type="submit" value="Update" class="btn btn-danger" />
+                </td>
+            }
+        </tr>
+    }
+    <tr style="font-weight:bold; text-align:right; color:red">
+        <td colspan="6"> Movie Ticket Total: @ViewBag.sumQuantity </td>
+        <td colspan="10"> Total: @ViewBag.Total USD </td>
+    </tr>
+    <tr style="font-weight:bold; color:black; text-align:right ">
+        <td colspan="10">
+            <a class="btn btn-danger" href="@Url.Action("AllCartDelete", "Cart")">Clear</a> | <a class="btn btn-danger" href="@Url.Action("PlaceOrder", "Cart")">OK</a>
+        </td>
+    </tr>
+</table>
+<style>
+    .img {
+        width: 200px;
+        height: 250px;
+    }
+</style>

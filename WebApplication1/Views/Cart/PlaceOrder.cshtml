@@ -1,0 +1,119 @@
+﻿@model IEnumerable<WebApplication1.Models.Cart>
+@{
+    ViewBag.Title = "PlaceOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>PlaceOrder</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.movie_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.movie_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.poster)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.release_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.iquantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.total)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.movie_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.movie_name)
+            </td>
+            <td>
+                <img src="@item.poster" class="img" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.release_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.iquantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.total)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "CartDelete", new { id = item.movie_id })
+            </td>
+        </tr>
+    }
+    <tr style="font-weight:bold; text-align:right; color:red">
+        <td colspan="6"> Movie Ticket Total: @ViewBag.sumQuantity </td>
+        <td colspan="10"> Total: @ViewBag.Total USD </td>
+    </tr>
+    <tr style="font-weight:bold; color:black; text-align:right ">
+        <td colspan="10">
+            <a class="btn btn-danger" href="@Url.Action("AllCartDelete", "Cart")">Clear</a> |
+            <a class="btn btn-danger" href="@Url.Action("Cart", "Cart")">Back To Cart</a>
+        </td>
+    </tr>
+</table>
+@using WebApplication1.Models
+<h2 style="text-align:center">Information of Place an order</h2>
+@{
+    Customer c = (Customer)Session["Customer"];
+}
+<table align="center">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        <tr style="height:40px">
+            <td>Customer ID: </td>
+            <td style="font-weight:bold">@c.cus_id</td>
+        </tr>
+        <tr style="height:40px">
+            <td>Full name: </td>
+            <td style="font-weight:bold">@c.cus_name</td>
+        </tr>
+        <tr style="height:40px">
+            <td>Email: </td>
+            <td style="font-weight:bold">@c.email</td>
+        </tr>
+        <tr style="height:40px">
+            <td>Phone: </td>
+            <td style="font-weight:bold">@c.phone</td>
+        </tr>
+        <tr style="height:40px">
+            <td>Date: </td>
+            <td style="font-weight:bold">@DateTime.Now.ToShortDateString()</td>
+        </tr>
+        <tr style="height:40px">
+            <td>Email: </td>
+            <td style="font-weight:bold">@c.email</td>
+        </tr>
+        <tr style="height:40px">
+            <td style="font-weight:bold">
+                <input type="submit" value="Confirm" class="btn btn-danger" />
+            </td>
+        </tr>
+    }
+</table>
+<style>
+    .img {
+        width: 200px;
+        height: 250px;
+    }
+</style>

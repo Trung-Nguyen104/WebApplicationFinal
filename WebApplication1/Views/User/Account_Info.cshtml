@@ -1,0 +1,42 @@
+﻿@model WebApplication1.Models.Customer
+
+@{
+    ViewBag.Title = "Account_Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Account Infor</h2>
+<div>
+    <h4>Customer @Html.DisplayFor(model => model.cus_name)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            <strong>Email</strong>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            <strong>Password</strong>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.password)
+        </dd>
+
+        <dt>
+            <strong>Phone Number</strong>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.phone)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    <a class="btn btn-danger" href="@Url.Action("Index", "Home")">Back</a> |
+    <a class="btn btn-danger" href="@Url.Action("LogOut", "User")">LogOut</a>
+</div>

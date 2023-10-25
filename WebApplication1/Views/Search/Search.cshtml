@@ -1,0 +1,38 @@
+﻿@model IEnumerable<WebApplication1.Models.Movie>
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1><strong>Search</strong></h1>
+@using (Html.BeginForm("Search", "Search", FormMethod.Get, new { @class = "form-inline" }))
+{
+    <div class="form-group form-inline" style="display: block;">
+        <input type="Text" class="form-control col-md-10" value="@ViewBag.Keyword" name="searchString" placeholder="Enter Movie's Name">
+        <input type="submit" class="btn btn-danger" value="Search" style="margin-left:10px;">
+    </div>
+    <br>
+}
+<div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
+    @foreach (var item in Model)
+    {
+        <div class="product-item @item.category">
+            <div class="product product_filter">
+                <div>
+                    <img src="@item.poster" class="img">
+                </div>
+                <div class="product_info">
+                    <h6 class="product_name"><a href="@Url.Action("Detail", "Home", new {id = item.movie_id} )">@item.movie_name</a></h6>
+                    <div class="product_price">@item.price</div>
+                </div>
+            </div>
+            <div class="red_button add_to_cart_button"><a href="@Url.Action("Detail", "Home", new {id = item.movie_id} )">Read More....</a></div>
+        </div>
+    }
+</div>
+<style>
+    .img {
+        width: 100%;
+        height: 250px;
+    }
+</style>

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<WebApplication1.Models.SumSaleQuantity>
+@{
+    ViewBag.Title = "StatisticMovie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2><strong>Statistic Movie Ticket</strong></h2>
+<table class="table">
+    <tr>
+        <th><strong>Movie Name</strong></th>
+        <th><strong>Sale Quantity</strong></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.movieName)</td>
+            <td>
+                @if (item.sumQuantity == null)
+                {
+                    <label styles="font-weight:normal">0</label>
+                }
+                else
+                {
+                    @item.sumQuantity
+                }
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,58 @@
+﻿@model WebApplication1.Models.Movie
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h3>@Html.DisplayFor(model => model.movie_name)</h3>
+    <div class="form-group form-inline">
+        <div>
+            <img src="@Model.poster" class="img" />
+        </div>
+        <div style="margin-left: 50px">
+            <h3>
+                Director
+            </h3>
+            <h5>
+                @Html.DisplayFor(model => model.director)
+            </h5>
+            <h3>
+                Release Date
+            </h3>
+            <h5>
+                @Html.DisplayFor(model => model.release_date)
+            </h5>
+            <h3>
+                Category
+            </h3>
+            <h5>
+                @Html.DisplayFor(model => model.category)
+            </h5>
+            <h3>
+                Price
+            </h3>
+            <h5>
+                @Html.DisplayFor(model => model.price) USD
+            </h5>
+        </div>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a class="btn btn-danger" href="@Url.Action("Index", "Admin")">Back To List</a>
+        </div>
+    }
+</div>
+<style>
+    .img {
+        width: 200px;
+        height: 250px;
+    }
+</style>

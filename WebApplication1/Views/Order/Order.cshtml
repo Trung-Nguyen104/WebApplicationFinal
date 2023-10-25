@@ -1,0 +1,52 @@
+﻿@model IEnumerable<WebApplication1.Models.Orders>
+
+@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>History Order</h2>
+<table class="table">
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            <h5>Order ID</h5>
+        </th>
+        <th>
+            <h5>Order Date</h5>
+        </th>
+        <th>
+            <h5>Total</h5>
+        </th>
+        <th></th>
+    </tr>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            var i = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.orderId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.orderDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.total)
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" href="@Url.Action("OrderDetail", "Order", new {id = item.orderId})">More...</a>
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+    </tbody>
+</table>
